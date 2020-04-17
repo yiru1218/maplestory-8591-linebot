@@ -30,13 +30,67 @@ def callback():
         abort(400)
     return 'OK'
 
-# 處理訊息
+# 可透過修改程式裡的 handle_message() 方法內的程式碼來控制機器人的訊息回覆
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token, message)
+def handle_message(link,title):
+    # message = TextSendMessage(text=event.message.text)
+    # line_bot_api.reply_message(event.reply_token, message)
+    #push message to one user
+    link=link_List[count]
+    title=Mesos_title_List[count]
+    message=TextSendMessage(text=link,title)
+    line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message )
 
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 30310))
     app.run(host='0.0.0.0', port=port)
+
+#%%
+from bs4 import BeautifulSoup
+import requests
+import re
+
+# %%
+url = 'https://www.8591.com.tw/mallList-list.html?searchGame=859&searchServer=862&searchType=0&searchKey='
+#Add User-Agent to the requests header
+#https://stackoverflow.com/questions/41909065/scrape-data-with-beautifulsoup-results-in-404
+headers = {"User-Agent":"Mozilla/5.0"}
+response = requests.get(url, headers=headers)
+soup = BeautifulSoup(response.text, 'lxml')
+#print(soup.prettify())
+def Mesos(n):
+    try:
+        return float(n)
+    except ValueError:
+        return float(0)
+
+# %%
+title_tag = soup.select("a.detail_link ")
+NT2Mesos_List=[]
+link_List=[]
+Mesos_title_List=[]
+count=0
+for title in title_tag:
+    link="https://www.8591.com.tw"+title["href"]
+    link_List.append(link)
+    Mesos_title=title.text
+    Mesos_title_List.append(Mesos_title)
+    str_num=title.text.find("1:")
+    str_w=title.text.find("萬")
+    #if(IsNum(title.text[str_num+2:str_w])==True):
+    NT2Mesos_List.append(Mesos(title.text[str_num+2:str_w]))
+for num in NT2Mesos_List:
+    if(NT2Mesos_List[count]==max(NT2Mesos_List)):
+        print(count)
+        break
+    count+=1
+
+# %%
+print(link_List[count],Mesos_title_List[count])
+print(NT2Mesos_List)
+print('目前最大幣值為:',max(NT2Mesos_List))
+NT2Mesos_List.remove(max(NT2Mesos_List))
+print('目前第二大幣值為:',max(NT2Mesos_List))
+
+# %%
