@@ -15,43 +15,11 @@ line_bot_api = LineBotApi('Tz9IL40q3kQ2Uj6z0ic3kyXBgWtQ9VDaE0mbBJk97nv5ot1ivG8dK
 # Channel Secret
 handler = WebhookHandler('515763b2e36a823dac1f37fce98375ff')
 
-# 監聽所有來自 /callback 的 Post Request
-@app.route("/callback", methods=['POST'])
-def callback():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
-    # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        abort(400)
-    return 'OK'
-
-# 可透過修改程式裡的 handle_message() 方法內的程式碼來控制機器人的訊息回覆
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(link,title):
-    # message = TextSendMessage(text=event.message.text)
-    # line_bot_api.reply_message(event.reply_token, message)
-    #push message to one user
-    link=link_List[count]
-    title=Mesos_title_List[count]
-    message=TextSendMessage(text=link,title)
-    line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message )
-
-import os
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 30310))
-    app.run(host='0.0.0.0', port=port)
-
-#%%
+# 找最大幣值
 from bs4 import BeautifulSoup
 import requests
 import re
 
-# %%
 url = 'https://www.8591.com.tw/mallList-list.html?searchGame=859&searchServer=862&searchType=0&searchKey='
 #Add User-Agent to the requests header
 #https://stackoverflow.com/questions/41909065/scrape-data-with-beautifulsoup-results-in-404
@@ -65,7 +33,7 @@ def Mesos(n):
     except ValueError:
         return float(0)
 
-# %%
+
 title_tag = soup.select("a.detail_link ")
 NT2Mesos_List=[]
 link_List=[]
@@ -86,11 +54,40 @@ for num in NT2Mesos_List:
         break
     count+=1
 
-# %%
+
 print(link_List[count],Mesos_title_List[count])
 print(NT2Mesos_List)
 print('目前最大幣值為:',max(NT2Mesos_List))
 NT2Mesos_List.remove(max(NT2Mesos_List))
 print('目前第二大幣值為:',max(NT2Mesos_List))
 
-# %%
+# 監聽所有來自 /callback 的 Post Request
+@app.route("/callback", methods=['POST'])
+def callback():
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
+    # handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        abort(400)
+    return 'OK'
+
+# 可透過修改程式裡的 handle_message() 方法內的程式碼來控制機器人的訊息回覆
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(message):
+    # message = TextSendMessage(text=event.message.text)
+    # line_bot_api.reply_message(event.reply_token, message)
+    #push message to one user
+    message=TextSendMessage(text=link_List[count]+Mesos_title_List[count])
+    line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message )
+
+import os
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 30310))
+    app.run(host='0.0.0.0', port=port)
+
+
