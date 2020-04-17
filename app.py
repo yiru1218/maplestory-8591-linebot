@@ -15,7 +15,7 @@ line_bot_api = LineBotApi('Tz9IL40q3kQ2Uj6z0ic3kyXBgWtQ9VDaE0mbBJk97nv5ot1ivG8dK
 # Channel Secret
 handler = WebhookHandler('515763b2e36a823dac1f37fce98375ff')
 
-# 找最大幣值
+# find max mesos ratio
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -62,7 +62,7 @@ print('目前最大幣值為:',max(NT2Mesos_List))
 NT2Mesos_List.remove(max(NT2Mesos_List))
 print('目前第二大幣值為:',max(NT2Mesos_List))
 
-# 監聽所有來自 /callback 的 Post Request
+# Monitor all from /callback 's Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -77,13 +77,12 @@ def callback():
         abort(400)
     return 'OK'
 
-# 可透過修改程式裡的 handle_message() 方法內的程式碼來控制機器人的訊息回覆
+# can control the message reply of the robot by modifying the code in the handle_message () method in the program
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(link_List,Mesos_title_List,count):
     # message = TextSendMessage(text=event.message.text)
     # line_bot_api.reply_message(event.reply_token, message)
     # push message to one user
-    # %0D%0A 換行
     message=TextSendMessage(text="目前最高幣值：1:"+str(max_mesos)+"\n"+link_List[count]+Mesos_title_List[count]) 
     line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message)
 
@@ -91,6 +90,6 @@ handle_message(link_List,Mesos_title_List,count)
 
 import os
 if __name__ == "__main__":
-    port: process.env.PORT or 5000
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
 
