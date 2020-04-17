@@ -91,6 +91,6 @@ handle_message(link_List,Mesos_title_List,count)
 
 import os
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 30310))
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
 
