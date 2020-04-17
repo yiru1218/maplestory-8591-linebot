@@ -55,6 +55,7 @@ for num in NT2Mesos_List:
         break
     count+=1
 max_mesos=max(NT2Mesos_List)
+old_max_mesos=max_mesos
 
 print(link_List[count],Mesos_title_List[count])
 print(NT2Mesos_List)
