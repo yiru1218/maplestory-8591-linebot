@@ -78,7 +78,7 @@ def callback():
 
 # 可透過修改程式裡的 handle_message() 方法內的程式碼來控制機器人的訊息回覆
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(message):
+def handle_message(link_List,Mesos_title_List,count):
     # message = TextSendMessage(text=event.message.text)
     # line_bot_api.reply_message(event.reply_token, message)
     #push message to one user
