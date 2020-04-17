@@ -39,6 +39,7 @@ NT2Mesos_List=[]
 link_List=[]
 Mesos_title_List=[]
 count=0
+max_mesos=0
 for title in title_tag:
     link="https://www.8591.com.tw"+title["href"]
     link_List.append(link)
@@ -53,7 +54,7 @@ for num in NT2Mesos_List:
         print(count)
         break
     count+=1
-
+max_mesos=max(NT2Mesos_List)
 
 print(link_List[count],Mesos_title_List[count])
 print(NT2Mesos_List)
@@ -81,13 +82,15 @@ def callback():
 def handle_message(link_List,Mesos_title_List,count):
     # message = TextSendMessage(text=event.message.text)
     # line_bot_api.reply_message(event.reply_token, message)
-    #push message to one user
-    message=TextSendMessage(text=link_List[count]+Mesos_title_List[count])
-    line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message )
+    # push message to one user
+    # %0D%0A 換行
+    message=TextSendMessage(text="目前最高幣值：1:"+str(max_mesos)+"\n"+link_List[count]+Mesos_title_List[count]) 
+    line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message)
+
+handle_message(link_List,Mesos_title_List,count)
 
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 30310))
     app.run(host='0.0.0.0', port=port)
-
 
