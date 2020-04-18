@@ -46,7 +46,7 @@ for title in title_tag:
     Mesos_title=title.text
     Mesos_title_List.append(Mesos_title)
     str_num=title.text.find("1:")
-    str_w=title.text.find("w")
+    str_w=title.text.find("萬")
     #if(IsNum(title.text[str_num+2:str_w])==True):
     NT2Mesos_List.append(Mesos(title.text[str_num+2:str_w]))
 for num in NT2Mesos_List:
@@ -84,13 +84,12 @@ def handle_message(link_List,Mesos_title_List,count):
     # message = TextSendMessage(text=event.message.text)
     # line_bot_api.reply_message(event.reply_token, message)
     # push message to one user
-    message=TextSendMessage(text="current ratio 1:"+str(max_mesos)+"\n"+link_List[count]+Mesos_title_List[count]) 
+    message=TextSendMessage(text="目前最高幣值 1:"+str(max_mesos)+"\n"+link_List[count]+Mesos_title_List[count]) 
     line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message)
 
 print(handle_message(link_List,Mesos_title_List,count))
 
 import os
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0',port=os.environ['PORT'])
 
