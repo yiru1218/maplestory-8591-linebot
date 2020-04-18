@@ -46,7 +46,7 @@ for title in title_tag:
     Mesos_title=title.text
     Mesos_title_List.append(Mesos_title)
     str_num=title.text.find("1:")
-    str_w=title.text.find("w"")
+    str_w=title.text.find("w")
     #if(IsNum(title.text[str_num+2:str_w])==True):
     NT2Mesos_List.append(Mesos(title.text[str_num+2:str_w]))
 for num in NT2Mesos_List:
@@ -59,9 +59,9 @@ max_mesos=max(NT2Mesos_List)
 
 # print(link_List[count],Mesos_title_List[count])
 # print(NT2Mesos_List)
-# print('ï¿½ï¿½æ¡?ï¿½ï¿½ï¿½ï¿½ï¿½æ?­æ?¹é¦³ï¿½ï¿½æ½?ï¿½ï¿½:',max(NT2Mesos_List))
+# print('ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½?ï¿½é¦³ï¿½ï¿½ï¿½?ï¿½ï¿½:',max(NT2Mesos_List))
 # NT2Mesos_List.remove(max(NT2Mesos_List))
-# print('ï¿½ï¿½æ¡?ï¿½ï¿½??????ï¿½ï¿½??­æ?¹é¦³ï¿½ï¿½æ½?ï¿½ï¿½:',max(NT2Mesos_List))
+# print('ï¿½ï¿½ï¿½?ï¿½ï¿½??????ï¿½ï¿½??ï¿½ï¿½?ï¿½é¦³ï¿½ï¿½ï¿½?ï¿½ï¿½:',max(NT2Mesos_List))
 
 # Monitor all from /callback 's Post Request
 @app.route("/callback", methods=['POST'])
