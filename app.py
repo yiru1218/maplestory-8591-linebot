@@ -46,7 +46,7 @@ for title in title_tag:
     Mesos_title=title.text
     Mesos_title_List.append(Mesos_title)
     str_num=title.text.find("1:")
-    str_w=title.text.find("萬")
+    str_w=title.text.find("w"")
     #if(IsNum(title.text[str_num+2:str_w])==True):
     NT2Mesos_List.append(Mesos(title.text[str_num+2:str_w]))
 for num in NT2Mesos_List:
@@ -54,14 +54,14 @@ for num in NT2Mesos_List:
         print(count)
         break
     count+=1
+    
 max_mesos=max(NT2Mesos_List)
-old_max_mesos=max_mesos
 
-print(link_List[count],Mesos_title_List[count])
-print(NT2Mesos_List)
-print('目前最大幣值為:',max(NT2Mesos_List))
-NT2Mesos_List.remove(max(NT2Mesos_List))
-print('目前第二大幣值為:',max(NT2Mesos_List))
+# print(link_List[count],Mesos_title_List[count])
+# print(NT2Mesos_List)
+# print('���?������?��?�馳���?��:',max(NT2Mesos_List))
+# NT2Mesos_List.remove(max(NT2Mesos_List))
+# print('���?��??????��??��?�馳���?��:',max(NT2Mesos_List))
 
 # Monitor all from /callback 's Post Request
 @app.route("/callback", methods=['POST'])
@@ -84,13 +84,13 @@ def handle_message(link_List,Mesos_title_List,count):
     # message = TextSendMessage(text=event.message.text)
     # line_bot_api.reply_message(event.reply_token, message)
     # push message to one user
-    message=TextSendMessage(text="目前最高幣值：1:"+str(max_mesos)+"\n"+link_List[count]+Mesos_title_List[count]) 
+    message=TextSendMessage(text="current ratio 1:"+str(max_mesos)+"\n"+link_List[count]+Mesos_title_List[count]) 
     line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message)
 
-handle_message(link_List,Mesos_title_List,count)
+print(handle_message(link_List,Mesos_title_List,count))
 
 import os
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 24245))
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
 
