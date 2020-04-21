@@ -85,11 +85,13 @@ def handle_message(link_List,Mesos_title_List,count):
     # line_bot_api.reply_message(event.reply_token, message)
     # push message to one user
     message=TextSendMessage(text="目前最高幣值 1:"+str(max_mesos)+"\n"+link_List[count]+Mesos_title_List[count]) 
+    # 推送至userID
     line_bot_api.push_message('U77799c06e0cc27d4a6c27ad46ef43057',message)
 
-print(handle_message(link_List,Mesos_title_List,count))
+handle_message(link_List,Mesos_title_List,count)
 
 import os
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=os.environ['PORT'])
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
 
