@@ -3,5 +3,3 @@ flask
 BeautifulSoup4
 lxml
 apscheduler
-datetime
-urllib
