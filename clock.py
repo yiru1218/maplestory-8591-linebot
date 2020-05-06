@@ -1,7 +1,8 @@
 # APScheduler 讓我們的免費 dyno 在快要睡著的時候自己喚醒自己
 from apscheduler.schedulers.blocking import BlockingScheduler
 import datetime
-import urllib
+import urllib.request
+
 
 sched = BlockingScheduler()
 
